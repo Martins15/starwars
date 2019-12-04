@@ -1,0 +1,4 @@
+www/vendor
+www/vendor/*
+.idea
+.idea/*

@@ -1,0 +1,27 @@
+version: '2'
+services:
+  php:
+    build: ./images/php
+    restart: always
+    links:
+      - mongo
+    volumes:
+      - ./www:/var/www
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - ./data/db/mongo:/data/db
+    ports:
+      - "27020:27017"
+  nginx:
+    image: nginx:latest
+    restart: always
+    ports:
+      - "8765:80"
+      - "443:443"
+    volumes:
+      - ./hosts:/etc/nginx/conf.d
+      - ./www:/var/www
+    links:
+      - php
