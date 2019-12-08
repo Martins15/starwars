@@ -41,7 +41,13 @@ class StarWarsService implements StarTasksInterface {
    * What character (person) appeared in most of the Star Wars films?
    */
   public function getPopularCharacter() {
-    //@TODO
+    $collection = $this->collection('people');
+    $count = $this->countPeople();
+    $popular = $collection->find(['id' => ['$in' => array_keys($count, max($count))]])->toArray();
+
+    return array_map(function($value) {
+      return $value['name'];
+    }, $popular);
   }
 
   /**
@@ -56,6 +62,28 @@ class StarWarsService implements StarTasksInterface {
    */
   public function getPilots($limit = 0) {
     //@TODO
+  }
+
+  /**
+   * Count people (character) appearances.
+   *
+   * @return array
+   *   Array of people ids as keys and number of appearances as values.
+   */
+  private function countPeople() {
+    $characters = [];
+    $collection_f = $this->collection('films');
+
+    $films = $collection_f->find([], ['projection' => ['characters'=> 1]])->toArray();
+
+    foreach ($films as $film) {
+      $characters = array_merge($characters, (array) $film['characters']);
+    }
+
+    $count = array_count_values($characters);
+    arsort($count);
+
+    return $count;
   }
 
   /**
