@@ -19,7 +19,7 @@ use GraphQL\Type\Definition\PlanetType;
 $input_raw = file_get_contents('php://input');
 
 if (!$input_raw) {
-  //die("Endpoint works, but no input provided :(");
+  die("Endpoint works, but no input provided :(");
 }
 
 try {
@@ -28,8 +28,6 @@ try {
   $context = [
     'model' => new StarWarsModel(new StarConfig())
   ];
-
-  //echo'<pre>';print_r($context['model']->getPilots(3));die;
 
   // Create data type and it's fields.
   $query_type = new ObjectType([
