@@ -1,8 +1,6 @@
 <?php
 
 require_once __DIR__ . '/config.php';
-require_once __DIR__ . '/graphql.php';
+require_once __DIR__ . '/service.php';
 
 $service = new StarWarsService(new StarConfig());
-
-print_r($service);
