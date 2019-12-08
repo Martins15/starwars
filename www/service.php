@@ -54,7 +54,23 @@ class StarWarsService implements StarTasksInterface {
    * What species (i.e. characters that belong to certain species) appeared in the most number of Star Wars films?
    */
   public function getSpeciesCount($limit = 0) {
-    //@TODO
+    $species_count = [];
+    $collection = $this->collection('species');
+    $people_count = $this->countPeople();
+    $species = $collection->find([], ['projection' => ['id' => 1, 'name' => 1, 'people' => 1]])->toArray();
+
+    foreach ($species as $species_item) {
+      $sid = $species_item['id'];
+      $species_count[$sid] = [
+        'name' => $species_item['name'],
+        'count' => 0
+      ];
+      foreach ($species_item['people'] as $cid) {
+        $species_count[$sid]['count'] += $people_count[$cid];
+      };
+    }
+
+    return $this->limit($species_count, $limit);
   }
 
   /**
@@ -84,6 +100,29 @@ class StarWarsService implements StarTasksInterface {
     arsort($count);
 
     return $count;
+  }
+
+  /**
+   * Cut and array of data.
+   *
+   * @param $data
+   * @param $limit
+   *
+   * @return array
+   */
+  private function limit($data, $limit) {
+    if ($limit) {
+      usort($data, [$this, 'sortCount']);
+      $data = array_slice($data, 0, (int) $limit);
+    }
+    return $data;
+  }
+
+  /**
+   * Callback to sort array.
+   */
+  private function sortCount($a, $b) {
+    return $b['count'] <=> $a['count'];
   }
 
   /**
