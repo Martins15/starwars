@@ -2,7 +2,7 @@
 
 /**
  * @file
- * GraphQL endpoint.
+ * Get, process and return data from DB.
  */
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -11,7 +11,7 @@ require_once __DIR__ . '/tasks.php';
 use MongoDB\Collection as MongoCollection;
 use MongoDB\Driver\Manager as MongoManager;
 
-class StarWarsService implements StarTasksInterface {
+class StarWarsModel implements StarTasksInterface {
 
   private $dbmanager;
   private $dbname;
