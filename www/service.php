@@ -9,20 +9,21 @@ require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/tasks.php';
 
 use GraphQL\GraphQL;
+use MongoDB\Client as MongoClient;
 
 class StarWarsService implements StarTasksInterface {
 
   private $config;
 
   public function __construct(StarConfig $config) {
-    $this->config = $config;
+    $this->db = new MongoClient($config->db);
   }
 
   /**
    * Which of all Star Wars movies has the longest opening crawl (counted by number of characters)?
    */
   public function getLongestOpening() {
-
+    print $this->db;
   }
 
   /**
