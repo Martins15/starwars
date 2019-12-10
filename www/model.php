@@ -81,6 +81,7 @@ class StarWarsModel implements StarTasksInterface {
     $pids = [];
     $collection_v = $this->collection('vehicles');
     $collection_p = $this->collection('planets');
+    $collection_sp = $this->collection('species');
     $vehicles = $collection_v->find(['pilots' => ['$not' => ['$size' => 0]]])->toArray();
 
     foreach ($vehicles as $vehicle) {
@@ -119,9 +120,16 @@ class StarWarsModel implements StarTasksInterface {
         'pilots' => [],
       ];
       foreach ($planet['pilots'] as $pilot) {
+        // Noticed some inconsistency in DB. Some people doesn't have relation to species.
+        // Tried to use relationship like people -> planet -> species, but same result.
+        $species = $collection_sp->aggregate([
+          ['$unwind' => '$people'],
+          ['$match' => ['people' => $pilot['id']]]
+        ])->toArray();
+
         $planet_data[$id]['pilots'][] = [
           'name' => $pilot['name'],
-          'species' => empty($planet['species']) ? NULL : $planet['species'][0]['name']
+          'species' => $species[0]['name']
         ];
       }
     }
