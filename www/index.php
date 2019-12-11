@@ -12,9 +12,8 @@ require_once __DIR__ . '/types/Planet.php';
 
 use GraphQL\GraphQL;
 use GraphQL\Type\Schema;
-use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
-use GraphQL\Type\Definition\PlanetType;
+use GraphQL\Type\Definition\{ObjectType, PlanetType, Type};
+use StarWars\{StarWarsModel, StarConfig};
 
 $input_raw = file_get_contents('php://input');
 
@@ -82,5 +81,6 @@ try {
 }
 
 // Output result.
+
 header('Content-Type: application/json; charset=UTF-8');
 echo json_encode($result);
