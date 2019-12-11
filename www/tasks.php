@@ -5,6 +5,8 @@
  * Tasks description.
  */
 
+namespace StarWars;
+
 interface StarTasksInterface {
 
   /**
