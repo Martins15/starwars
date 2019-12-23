@@ -1,4 +1,4 @@
-# StarWars test task backend
+# StarWars test task
 
 ### Installation instructions
 
