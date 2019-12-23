@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Star Wars</title>
+  <meta charset="utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/client/css/style.css" />
+  <script src="/client/js/app.js"></script>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <header>
+    <img class="logo" src="/client/logo.png" alt="Star Wars" />
+  </header>
+
+  <a id="button" onclick="loadData('http://localhost:8765/api/index.php');" class="button" href="#">&#9733; Do. Or do not. There is no try. &#9733;</a>
+
+  <section class="content" id="content">
+    <dl>
+      <dt>Which of all Star Wars movies has the longest opening crawl?</dt>
+      <dd data-query="{longestOpening}"></dd>
+    </dl>
+    <dl>
+      <dt>What character (person) appeared in most of the Star Wars films?</dt>
+      <dd data-query="{popularCharacter}"></dd>
+    </dl>
+    <dl>
+      <dt>What species appeared in the most number of Star Wars films?</dt>
+      <dd data-query="{speciesCount(limit:3)}"></dd>
+    </dl>
+    <dl>
+      <dt>What planet in Star Wars universe provided largest number of vehicle pilots?</dt>
+      <dd data-query="{pilots(limit: 4){name count pilots}}"></dd>
+    </dl>
+  </section>
+
+</div>
+
+</body>
+</html>
